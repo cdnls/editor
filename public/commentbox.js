@@ -34,8 +34,8 @@ list.style.cssText = `
   border-radius: 6px;
   background: #fafafa;
 `;
-    div.appendChild(form);
     div.appendChild(list);
+    div.appendChild(form);
 
     // 🔄 Ambil komentar dari Redis
     fetch(`https://cdnts.vercel.app/api/index?id=${commentId}`)
