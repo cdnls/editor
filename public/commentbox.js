@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     form.innerHTML = `
       <input type="text" name="name" style="width:50%;padding:5px;" placeholder="Nama" required><br>
       <textarea name="comment" style="width:100%;height:200px;padding:5px;" placeholder="Komentar..." required></textarea><br>
-      <button type="submit">Kirim</button>
+      <button type="submit" style="padding:5px">Kirim</button>
     `;
 form.style.cssText = `
   width: 100%;
