@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     div.appendChild(list);
 
     // 🔄 Ambil komentar dari Redis
-    fetch(`/api/index?id=${commentId}`)
+    fetch(`https://cdnts.vercel.app/api/index?id=${commentId}`)
       .then(res => res.json())
       .then(data => {
         list.innerHTML = '';
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (!name || !comment) return;
 
-      fetch('/api/index', {
+      fetch('https://cdnts.vercel.app/api/index', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: commentId, name, comment })
