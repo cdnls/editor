@@ -44,14 +44,14 @@
     }
 
     async function hapus(id, index) {
-      if (!confirm('Yakin mau hapus komentar ini?')) return;
-      await fetch('/api/moderate', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, index })
-      });
-      load(); // refresh list
-    }
+  if (!confirm('Yakin mau hapus komentar ini?')) return;
+  await fetch('/api/moderate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'delete', id, index })
+  });
+  load(); // refresh list
+}
   </script>
 </body>
 </html>
