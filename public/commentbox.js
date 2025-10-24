@@ -12,11 +12,17 @@ document.addEventListener('DOMContentLoaded', function () {
     // 💬 Buat form komentar
     const form = document.createElement('form');
     form.innerHTML = `
-      <input type="text" name="name" placeholder="Nama" required><br>
-      <textarea name="comment" placeholder="Komentar..." required></textarea><br>
+      <input type="text" name="name" style="width:50%" placeholder="Nama" required><br>
+      <textarea name="comment" style="width:100%" placeholder="Komentar..." required></textarea><br>
       <button type="submit">Kirim</button>
     `;
-
+form.style.cssText = `
+  width: 100%;
+  border: 1px solid #eee;
+  padding: 12px;
+  border-radius: 6px;
+  background: #fafafa;
+`;
     // 📋 Buat list komentar
     const list = document.createElement('div');
     list.className = 'comment-list';
