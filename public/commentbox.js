@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // 💬 Buat form komentar
     const form = document.createElement('form');
     form.innerHTML = `
-      <input type="text" name="name" style="width:50%" placeholder="Nama" required><br>
-      <textarea name="comment" style="width:100%" placeholder="Komentar..." required></textarea><br>
+      <input type="text" name="name" style="width:50%;padding:5px;" placeholder="Nama" required><br>
+      <textarea name="comment" style="width:100%;height:200px;padding:5px;" placeholder="Komentar..." required></textarea><br>
       <button type="submit">Kirim</button>
     `;
 form.style.cssText = `
@@ -49,7 +49,7 @@ list.style.cssText = `
           comments.forEach(c => {
             const item = document.createElement('p');
             item.innerHTML = `
-<div style="border:1px solid #eee">
+<div style="border:1px solid #eee;padding:5px;">
 <strong>${c.name}</strong><br/> ${c.comment}</div>`;
             list.appendChild(item);
           });
