@@ -53,16 +53,18 @@ document.addEventListener('DOMContentLoaded', function () {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: commentId, name, comment })
       })
-        .then(res => res.json())
-        .then(result => {
-          if (result.success) {
-            const item = document.createElement('p');
-            item.innerHTML = `<strong>${name}</strong>: ${comment}`;
-            list.appendChild(item);
-            form.reset();
-          } else {
-            alert('Gagal menyimpan komentar.');
+        .then(() => {
+          // Hapus placeholder jika masih ada
+          if (list.querySelector('em')) {
+            list.innerHTML = '';
           }
+
+          // Tambahkan komentar baru ke list
+          const item = document.createElement('p');
+          item.innerHTML = `<strong>${name}</strong>: ${comment}`;
+          list.appendChild(item);
+
+          form.reset();
         })
         .catch(err => {
           alert('Gagal menyimpan komentar: ' + err);
