@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.createElement('form');
     form.innerHTML = `
       <input type="text" name="name" style="width:50%;padding:5px;" placeholder="Nama" required><br>
-      <textarea name="comment" style="width:100%;height:200px;padding:5px;" placeholder="Komentar..." required></textarea><br>
+      <textarea name="comment" style="width:100%;height:150px;padding:5px;" placeholder="Komentar..." required></textarea><br>
       <button type="submit" style="padding:5px">Kirim</button>
     `;
 form.style.cssText = `
