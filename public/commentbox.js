@@ -78,7 +78,8 @@ list.style.cssText = `
           }
 
           const item = document.createElement('p');
-          item.innerHTML = `<strong>${name}</strong><br/> ${comment}`;
+          item.innerHTML = `
+<div style="border:1px solid #eee;padding:5px;"><strong>${name}</strong><br/> ${comment}</div>`;
           list.appendChild(item);
 
           form.reset();
