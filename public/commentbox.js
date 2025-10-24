@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 🔧 Tambahkan link admin di atas form
     const adminLink = document.createElement('p');
-    adminLink.innerHTML = `<a href="https://cdnts.vercel.app/admin.html?id=${commentId}" target="_blank" style="font-size:0.9em;color:#555">[admin]🔧Edit komentar</a>`;
+    adminLink.innerHTML = `<a href="https://vu.vercel.app/admin.html?id=${commentId}" target="_blank" style="font-size:0.9em;color:#555">[admin]🔧Edit komentar</a>`;
     
 
     // 💬 Buat form komentar
@@ -39,7 +39,7 @@ list.style.cssText = `
     div.appendChild(form);
 
     // 🔄 Ambil komentar dari Redis
-    fetch(`https://cdnts.vercel.app/api/index?id=${commentId}`)
+    fetch(`https://vu.vercel.app/api/index?id=${commentId}`)
       .then(res => res.json())
       .then(data => {
         list.innerHTML = '';
@@ -68,7 +68,7 @@ list.style.cssText = `
 
       if (!name || !comment) return;
 
-      fetch('https://cdnts.vercel.app/api/index', {
+      fetch('https://vu.vercel.app/api/index', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: commentId, name, comment })
