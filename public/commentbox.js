@@ -4,7 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
   commentDivs.forEach(div => {
     const commentId = div.id;
 
-    // Buat form komentar
+    // 🔧 Tambahkan link admin di atas form
+    const adminLink = document.createElement('p');
+    adminLink.innerHTML = `<a href="/admin.html?id=${commentId}" target="_blank" style="font-size:0.9em;color:#555">🔧 Moderasi komentar ini</a>`;
+    div.appendChild(adminLink);
+
+    // 💬 Buat form komentar
     const form = document.createElement('form');
     form.innerHTML = `
       <input type="text" name="name" placeholder="Nama" required><br>
@@ -12,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <button type="submit">Kirim</button>
     `;
 
-    // Buat list komentar
+    // 📋 Buat list komentar
     const list = document.createElement('div');
     list.className = 'comment-list';
     list.innerHTML = `<p><em>Memuat komentar...</em></p>`;
@@ -20,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     div.appendChild(form);
     div.appendChild(list);
 
-    // Ambil komentar dari Redis
+    // 🔄 Ambil komentar dari Redis
     fetch(`/api/index?id=${commentId}`)
       .then(res => res.json())
       .then(data => {
@@ -40,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         list.innerHTML = `<p><em>Gagal memuat komentar: ${err}</em></p>`;
       });
 
-    // Tangani submit komentar baru
+    // 📥 Tangani submit komentar baru
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       const name = form.name.value.trim();
@@ -54,12 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
         body: JSON.stringify({ id: commentId, name, comment })
       })
         .then(() => {
-          // Hapus placeholder jika masih ada
           if (list.querySelector('em')) {
             list.innerHTML = '';
           }
 
-          // Tambahkan komentar baru ke list
           const item = document.createElement('p');
           item.innerHTML = `<strong>${name}</strong>: ${comment}`;
           list.appendChild(item);
