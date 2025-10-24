@@ -15,7 +15,7 @@
   <textarea id="value" placeholder="Tulis teks di sini..."></textarea>
   <button onclick="save()">Simpan ke Redis</button>
   <pre id="status">Memuat data dari Redis...</pre>
- <div id="values" placeholder="Tulis teks di sini..."></div>
+ <div id="values"></div>
 
   <script>
     const key = 'editor:latest';
@@ -24,8 +24,9 @@
       try {
         const res = await fetch('/api/load?key=' + encodeURIComponent(key));
         const result = await res.json();
+const results = await res.text();
         document.getElementById('value').value = result.value || '';
-document.getElementById('values').innerHTML = result.values || '';
+document.getElementById('values').innerHTML = results || '';
         document.getElementById('status').textContent = 'Data berhasil dimuat dari Redis.';
       } catch (err) {
         document.getElementById('status').textContent = 'Gagal memuat data: ' + err;
