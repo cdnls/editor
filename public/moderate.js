@@ -23,4 +23,4 @@ export default async function handler(req, res) {
   comments.splice(index, 1);
   await redis.set(id, comments);
   res.status(200).json({ success: true });
-}
+} 
