@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Text Editor Redis</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; }
+    textarea { width: 100%; height: 200px; }
+    input, button { margin-top: 1em; display: block; }
+  </style>
+</head>
+<body>
+  <h1>Text Editor Redis</h1>
+  <input type="text" id="key" placeholder="Masukkan kunci (key)" />
+  <textarea id="value" placeholder="Tulis teks di sini..."></textarea>
+  <button onclick="save()">Simpan ke Redis</button>
+  <button onclick="load()">Ambil dari Redis</button>
+  <pre id="status"></pre>
+
+  <script>
+    async function save() {
+      const key = document.getElementById('key').value;
+      const value = document.getElementById('value').value;
+      const res = await fetch('/api/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key, value })
+      });
+      const result = await res.json();
+      document.getElementById('status').textContent = JSON.stringify(result, null, 2);
+    }
+
+    async function load() {
+      const key = document.getElementById('key').value;
+      const res = await fetch('/api/load?key=' + encodeURIComponent(key));
+      const result = await res.json();
+      document.getElementById('value').value = result.value || '';
+      document.getElementById('status').textContent = JSON.stringify(result, null, 2);
+    }
+  </script>
+</body>
+</html>
