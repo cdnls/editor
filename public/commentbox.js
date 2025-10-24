@@ -27,7 +27,13 @@ form.style.cssText = `
     const list = document.createElement('div');
     list.className = 'comment-list';
     list.innerHTML = `<p><em>Memuat komentar...</em></p>`;
-
+list.style.cssText = `
+  width: 100%;
+  border: 1px solid #eee;
+  padding: 12px;
+  border-radius: 6px;
+  background: #fafafa;
+`;
     div.appendChild(form);
     div.appendChild(list);
 
