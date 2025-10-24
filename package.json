@@ -1,0 +1,12 @@
+{
+  "name": "editor",
+  "version": "1.0.0",
+  "main": "api/save.js",
+  "type": "commonjs",
+  "dependencies": {
+    "@upstash/redis": "^1.20.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
