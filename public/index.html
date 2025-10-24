@@ -23,10 +23,7 @@
     async function load() {
       try {
         const res = await fetch('/api/load?key=' + encodeURIComponent(key));
-        const result = await res.json();
-const results = await res.text();
-        document.getElementById('value').value = result.value || '';
-document.getElementById('values').innerHTML = results.value || '';
+        const result = await res.json(); document.getElementById('value').value = result.value || '';
         document.getElementById('status').textContent = 'Data berhasil dimuat dari Redis.';
       } catch (err) {
         document.getElementById('status').textContent = 'Gagal memuat data: ' + err;
