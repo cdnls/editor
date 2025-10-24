@@ -8,17 +8,23 @@
     input, button { margin: 0.5em 0; }
     .comment { border-bottom: 1px solid #ccc; padding: 0.5em 0; }
     .comment strong { color: #333; }
+    #login input { display: block; margin-bottom: 0.5em; }
   </style>
 </head>
 <body>
   <h1>Moderasi Komentar</h1>
 
-  <div>
-    <input id="key" placeholder="Masukkan commentboxID (misal: commentbox1)" />
-    <button onclick="load()">Tampilkan Komentar</button>
+  <div id="login">
+    <input id="username" placeholder="Username" />
+    <input id="password" type="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
   </div>
 
-  <div id="list"></div>
+  <div id="panel" style="display:none">
+    <input id="key" placeholder="Masukkan commentboxID (misal: commentbox1)" />
+    <button onclick="load()">Tampilkan Komentar</button>
+    <div id="list"></div>
+  </div>
 
   <script>
     function getCommentboxID() {
@@ -26,6 +32,25 @@
       const fromURL = urlParams.get('id');
       const fromInput = document.getElementById('key').value.trim();
       return fromURL || fromInput;
+    }
+
+    function login() {
+      const u = document.getElementById('username').value;
+      const p = document.getElementById('password').value;
+
+      if (u === 'admin' && p === 'jimat123') {
+        localStorage.setItem('adminToken', 'nyala');
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('panel').style.display = 'block';
+
+        const urlID = new URLSearchParams(window.location.search).get('id');
+        if (urlID) {
+          document.getElementById('key').value = urlID;
+          load();
+        }
+      } else {
+        alert('Username/password salah beb');
+      }
     }
 
     async function load() {
@@ -56,20 +81,32 @@
 
     async function hapus(id, index) {
       if (!confirm('Yakin mau hapus komentar ini?')) return;
+
       await fetch('/api/moderate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'delete', id, index: Number(index) })
+        body: JSON.stringify({
+          action: 'delete',
+          id,
+          index: Number(index),
+          token: localStorage.getItem('adminToken')
+        })
       });
+
       load(); // refresh list
     }
 
-    // Auto-load jika ada ?id= di URL
+    // Auto-login jika token sudah ada
     window.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('id')) {
-        document.getElementById('key').value = urlParams.get('id');
-        load();
+      if (localStorage.getItem('adminToken') === 'nyala') {
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('panel').style.display = 'block';
+
+        const urlID = new URLSearchParams(window.location.search).get('id');
+        if (urlID) {
+          document.getElementById('key').value = urlID;
+          load();
+        }
       }
     });
   </script>
