@@ -48,7 +48,9 @@ list.style.cssText = `
         } else {
           comments.forEach(c => {
             const item = document.createElement('p');
-            item.innerHTML = `<strong>${c.name}</strong><br/> ${c.comment}`;
+            item.innerHTML = `
+<div style="border:1px solid #eee">
+<strong>${c.name}</strong><br/> ${c.comment}</div>`;
             list.appendChild(item);
           });
         }
