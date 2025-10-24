@@ -10,13 +10,19 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { action, id, index } = req.body;
+  const { action, id, index, token } = req.body;
+
+  // 🔐 Validasi token admin
+  if (token !== 'nyala') {
+    return res.status(403).json({ error: 'Unauthorized' });
+  }
+
   if (action !== 'delete') {
     return res.status(400).json({ error: 'Invalid action' });
   }
 
-  if (!id || typeof index !== 'number') {
-    return res.status(400).json({ error: 'Missing id or index' });
+  if (!id || typeof index !== 'number' || isNaN(index)) {
+    return res.status(400).json({ error: 'Missing or invalid id/index' });
   }
 
   const comments = await redis.get(id);
@@ -30,5 +36,6 @@ export default async function handler(req, res) {
 
   comments.splice(index, 1);
   await redis.set(id, comments);
-  res.status(200).json({ success: true });
+
+  res.status(200).json({ success: true, remaining: comments.length });
 }
