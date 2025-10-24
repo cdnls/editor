@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 🔧 Tambahkan link admin di atas form
     const adminLink = document.createElement('p');
     adminLink.innerHTML = `<a href="https://cdnts.vercel.app/admin.html?id=${commentId}" target="_blank" style="font-size:0.9em;color:#555">[admin]🔧Edit komentar</a>`;
-    div.appendChild(adminLink);
+    
 
     // 💬 Buat form komentar
     const form = document.createElement('form');
@@ -35,6 +35,7 @@ list.style.cssText = `
   background: #fafafa;
 `;
     div.appendChild(list);
+    div.appendChild(adminLink);
     div.appendChild(form);
 
     // 🔄 Ambil komentar dari Redis
