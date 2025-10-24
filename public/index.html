@@ -6,20 +6,31 @@
   <style>
     body { font-family: sans-serif; padding: 2em; }
     textarea { width: 100%; height: 200px; }
-    input, button { margin-top: 1em; display: block; }
+    button { margin-top: 1em; display: block; }
+    pre { margin-top: 1em; background: #f0f0f0; padding: 1em; }
   </style>
 </head>
 <body>
   <h1>Text Editor Redis</h1>
-  <input type="text" id="key" placeholder="Masukkan kunci (key)" />
   <textarea id="value" placeholder="Tulis teks di sini..."></textarea>
   <button onclick="save()">Simpan ke Redis</button>
-  <button onclick="load()">Ambil dari Redis</button>
-  <pre id="status"></pre>
+  <pre id="status">Memuat data dari Redis...</pre>
 
   <script>
+    const key = 'editor:latest';
+
+    async function load() {
+      try {
+        const res = await fetch('/api/load?key=' + encodeURIComponent(key));
+        const result = await res.json();
+        document.getElementById('value').value = result.value || '';
+        document.getElementById('status').textContent = 'Data berhasil dimuat dari Redis.';
+      } catch (err) {
+        document.getElementById('status').textContent = 'Gagal memuat data: ' + err;
+      }
+    }
+
     async function save() {
-      const key = document.getElementById('key').value;
       const value = document.getElementById('value').value;
       const res = await fetch('/api/save', {
         method: 'POST',
@@ -30,13 +41,8 @@
       document.getElementById('status').textContent = JSON.stringify(result, null, 2);
     }
 
-    async function load() {
-      const key = document.getElementById('key').value;
-      const res = await fetch('/api/load?key=' + encodeURIComponent(key));
-      const result = await res.json();
-      document.getElementById('value').value = result.value || '';
-      document.getElementById('status').textContent = JSON.stringify(result, null, 2);
-    }
+    // Auto-load saat halaman dibuka
+    load();
   </script>
 </body>
 </html>
