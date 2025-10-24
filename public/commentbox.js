@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
           comments.forEach(c => {
             const item = document.createElement('p');
-            item.innerHTML = `<strong>${c.name}</strong>: ${c.comment}`;
+            item.innerHTML = `<strong>${c.name}</strong><br/> ${c.comment}`;
             list.appendChild(item);
           });
         }
