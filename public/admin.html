@@ -12,13 +12,24 @@
 </head>
 <body>
   <h1>Moderasi Komentar</h1>
-  <input id="key" placeholder="Masukkan commentboxID (misal: commentbox1)" />
-  <button onclick="load()">Tampilkan Komentar</button>
+
+  <div>
+    <input id="key" placeholder="Masukkan commentboxID (misal: commentbox1)" />
+    <button onclick="load()">Tampilkan Komentar</button>
+  </div>
+
   <div id="list"></div>
 
   <script>
+    function getCommentboxID() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromURL = urlParams.get('id');
+      const fromInput = document.getElementById('key').value.trim();
+      return fromURL || fromInput;
+    }
+
     async function load() {
-      const key = document.getElementById('key').value.trim();
+      const key = getCommentboxID();
       const list = document.getElementById('list');
       if (!key) return alert('Isi dulu ID-nya beb');
 
@@ -44,14 +55,23 @@
     }
 
     async function hapus(id, index) {
-  if (!confirm('Yakin mau hapus komentar ini?')) return;
-  await fetch('/api/moderate', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'delete', id, index })
-  });
-  load(); // refresh list
-}
+      if (!confirm('Yakin mau hapus komentar ini?')) return;
+      await fetch('/api/moderate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', id, index: Number(index) })
+      });
+      load(); // refresh list
+    }
+
+    // Auto-load jika ada ?id= di URL
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('id')) {
+        document.getElementById('key').value = urlParams.get('id');
+        load();
+      }
+    });
   </script>
 </body>
 </html>
