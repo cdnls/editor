@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 🔧 Tambahkan link admin di atas form
     const adminLink = document.createElement('p');
-    adminLink.innerHTML = `<a href="/admin.html?id=${commentId}" target="_blank" style="font-size:0.9em;color:#555">🔧 Moderasi komentar ini</a>`;
+    adminLink.innerHTML = `<a href="https://cdnts.vercel.app/admin.html?id=${commentId}" target="_blank" style="font-size:0.9em;color:#555">🔧 Moderasi komentar ini</a>`;
     div.appendChild(adminLink);
 
     // 💬 Buat form komentar
